@@ -5,6 +5,7 @@ import ProductGrid from "@/components/ProductGrid";
 import Features from "@/components/Features";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
         <Newsletter />
       </main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
