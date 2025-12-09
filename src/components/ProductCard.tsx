@@ -1,8 +1,11 @@
 import { Heart, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
+  id: number;
   image: string;
   name: string;
   price: number;
@@ -11,12 +14,22 @@ interface ProductCardProps {
   tag?: string;
 }
 
-const ProductCard = ({ image, name, price, originalPrice, installments = 3, tag }: ProductCardProps) => {
+const ProductCard = ({ id, image, name, price, originalPrice, installments = 3, tag }: ProductCardProps) => {
+  const { addItem } = useCart();
+
   const formatPrice = (value: number) => {
     return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   };
 
   const installmentValue = price / installments;
+
+  const handleAddToCart = () => {
+    addItem({ id, name, price, image });
+    toast({
+      title: "Adicionado ao carrinho!",
+      description: name,
+    });
+  };
 
   return (
     <article className="product-card group bg-card">
@@ -44,7 +57,7 @@ const ProductCard = ({ image, name, price, originalPrice, installments = 3, tag 
 
         {/* Quick add */}
         <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-          <Button className="w-full gap-2" size="sm">
+          <Button className="w-full gap-2" size="sm" onClick={handleAddToCart}>
             <ShoppingCart className="h-4 w-4" />
             Adicionar
           </Button>
